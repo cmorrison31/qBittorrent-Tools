@@ -18,15 +18,24 @@ information.
 Create a `config.ini` file like so:
 
 ```ini
-[qBittorrent-Tools]
+[credentials]
 username = username
 password = password
 server url = example.com:port
-paths to ignore = 'some path'
+
+[paths]
+qbittorrent base directory = base torrent file path
+paths to ignore = comma separated list of paths to ignore
 
 [path maps]
-some path = another path
+path to map = value to map to
 ```
+
+Path mapping is used to address the fact that in a docker container, the 
+path seen by the qBittorrent client probably isn't the real path. For 
+example, if in the container, the files are stored in `/data` but are 
+physically on a RAID array, `/mnt/md0` then the following mapping would be 
+needed: `/data = /mnt/md0`.
 
 # Example Usage
 Call the script function for the operation you wish to execute. The 
