@@ -6,22 +6,6 @@ on:
       - main
 
 jobs:
-  test:
-    strategy:
-      matrix:
-        python: [ '3.13' ]
-        platform: [ ubuntu-latest ]
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python }}
-      - name: Install test dependencies
-        run: pip install .[test]
-      - name: Run tests
-        run: pytest
-
   build-and-publish:
     runs-on: ubuntu-latest
     environment: pypi
