@@ -119,3 +119,31 @@ def orphaned_torrents():
     with open('orphans.txt', 'w') as f:
         for path in sorted(list(orphan_paths)):
             f.write(path.as_posix() + '\n')
+
+
+def update_tracker_url():
+    config = Utilities.load_config()
+
+    client = Client(host=config.get('credentials', 'server url'),
+                    username=config.get('credentials', 'username'),
+                    password=config.get('credentials', 'password'))
+    torrent_list = client.torrents.info()
+    count = 0
+
+    # Don't hit the API if we have nothing to do
+    if config.get('trackers', 'old url prefix') == '':
+        return
+
+    for torrent in torrent_list:
+        for tracker in torrent.trackers:
+
+            if tracker.url.startswith(config.get('trackers', 'old url prefix')):
+                new_url = tracker.url.replace(
+                    config.get('trackers', 'old url prefix'),
+                    config.get('trackers', 'new url prefix'))
+
+                torrent.update_tracker_url(orig_url=tracker.url, new_url=new_url)
+
+                count += 1
+
+    print('Edited the tracker for torrents: {:.0f}'.format(count))

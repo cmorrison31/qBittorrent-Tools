@@ -29,6 +29,10 @@ paths to ignore = comma separated list of paths to ignore
 
 [path maps]
 path to map = value to map to
+
+[trackers]
+old url prefix = http:example.com
+new url prefix = https:example.com
 ```
 
 Path mapping is used to address the fact that in a docker container, the 

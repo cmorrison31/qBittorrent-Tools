@@ -17,6 +17,11 @@ def load_config(configuration_file_path='config.ini'):
         'qbittorrent base directory': ''
     }
 
+    configuration['trackers'] = {
+        'old url prefix': '',
+        'new url prefix': ''
+    }
+
     configuration.read(configuration_file_path)
 
     url = configuration.get('credentials', 'server url')
