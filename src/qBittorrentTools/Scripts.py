@@ -25,7 +25,8 @@ def unregistered_torrents():
                 if (tracker.msg.lower().endswith(
                         'reset by peer') or tracker.msg.lower().endswith(
                     'bad gateway') or tracker.msg.lower().endswith(
-                    'timed out')):
+                    'timed out') or tracker.msg.lower().endswith(
+                    'internal server error')):
                     down_count += 1
                 else:
                     count = count + 1
@@ -142,7 +143,8 @@ def update_tracker_url():
                     config.get('trackers', 'old url prefix'),
                     config.get('trackers', 'new url prefix'))
 
-                torrent.update_tracker_url(orig_url=tracker.url, new_url=new_url)
+                torrent.update_tracker_url(orig_url=tracker.url,
+                                           new_url=new_url)
 
                 count += 1
 
